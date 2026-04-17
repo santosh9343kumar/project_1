@@ -1,8 +1,1 @@
-dnf install python3 -y
-pip3 install pytest
-dnf install python3-pip -y
-pip3 --version
-pip3 install pytest
-cat ~/git_token.txt
-ls -l
-
+pytest
