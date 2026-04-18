@@ -1,0 +1,38 @@
+pipeline {
+  agent any
+  enveronment = {
+    PATH = "/usr/local/bin:/usr/bin:/bin:/var/lib/jenkins/.local/bin:$PATH"
+  }
+  stages {
+    stage('checkout'){
+      steps {
+        checkout scm
+      }
+    }
+    
+    stage('build'){
+      steps {
+        echo "Running tests..."
+        sh 'pytest --cov=app --cov-report=xml'
+      }
+    }
+    stage('deploy'){
+      steps {
+        echo "Deploying application..."
+        // simple local deployments
+        sh '''
+        pkill -f app.py || true
+        nohup python3 app.py > app.log 2>&1 &
+        '''
+      }
+    }
+  }
+  post {
+    success {
+      echo "Deployment success"
+    }
+    failure {
+      echo "Pipeline failed!"
+    }
+  }
+}
