@@ -12,8 +12,9 @@ pipeline {
     stage('install dependany'){
       steps {
         sh '''
+        ls -la
         pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r jenkins_ci_cd/requirements.txt
         '''
       }
     }
