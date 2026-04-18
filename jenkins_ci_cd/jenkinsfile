@@ -1,6 +1,6 @@
 pipeline {
   agent any
-  environment = {
+  environment {
     PATH = "/usr/local/bin:/usr/bin:/bin:/var/lib/jenkins/.local/bin:$PATH"
   }
   stages {
