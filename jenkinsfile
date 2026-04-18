@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    environment {
+        // correct Jenkins user path
+        PATH = "/usr/local/bin:/usr/bin:/bin:/var/lib/jenkins/.local/bin:$PATH"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/santosh9343kumar/project_1.git'
+            }
+        }
+
+        stage('Install Dependency') {
+            steps {
+                sh '''
+                    ls -la
+                    pip3 install --user -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh '''
+                    pytest --cov=app --cov-report=xml
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'coverage.xml', fingerprint: true
+        }
+
+        failure {
+            echo 'Build failed due to test failures'
+        }
+    }
+}
