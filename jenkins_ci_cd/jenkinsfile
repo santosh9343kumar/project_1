@@ -1,6 +1,6 @@
 pipeline {
   agent any
-  environment {
+  enveronment = {
     PATH = "/usr/local/bin:/usr/bin:/bin:/var/lib/jenkins/.local/bin:$PATH"
   }
   stages {
@@ -9,6 +9,15 @@ pipeline {
         checkout scm
       }
     }
+    stage('install dependany'){
+      steps {
+        sh '''
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        '''
+      }
+    }
+    
     
     stage('build'){
       steps {
