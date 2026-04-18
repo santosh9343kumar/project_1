@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/santosh9343kumar/project_1.git'
+                checkout scm
             }
         }
 
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh '''
                     ls -la
-                    pip3 install --user -r requirements.txt
+                    pip3 install -r requirements.txt
                 '''
             }
         }
